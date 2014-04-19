@@ -34,13 +34,31 @@ $twig->addFunction(
 );
 
 // Guzzle play
+use Guzzle\Http\Client;
+use Doctrine\Common\Cache\FilesystemCache;
+use Guzzle\Cache\DoctrineCacheAdapter;
+use Guzzle\Plugin\Cache\CachePlugin;
+use Guzzle\Plugin\Cache\DefaultCacheStorage;
+
 $userGuid = "c4c27fbd-53b8-4216-a399-ba83eae1cfc7";
 $apiKey = "K0oLG5tbdmPlcl41i7+80i/z8zK8a+o6O3zMPLLWL+si2oH3Ts3TBmp28tCiNfNaudx2UEQsOTxVC62T6VgR3g==";
 
 function query($connectorGuid, $input, $userGuid, $apiKey, $additionalInput) {
 
-  $client = new GuzzleHttp\Client();
-  $result = $client->get("https://api.import.io/store/connector/" . $connectorGuid . "/_query?_user=" . urlencode($userGuid) . "&_apikey=" . urlencode($apiKey));
+  $client = new Client();
+
+  $cachePlugin = new CachePlugin(array(
+  'storage' => new DefaultCacheStorage(
+      new DoctrineCacheAdapter(
+          new FilesystemCache(CACHE_PATH . 'guzzle')
+      )
+  )
+  ));
+
+  // Add the cache plugin to the client object
+  $client->addSubscriber($cachePlugin);
+
+  $result = $client->get("https://api.import.io/store/connector/" . $connectorGuid . "/_query?_user=" . urlencode($userGuid) . "&_apikey=" . urlencode($apiKey))->send();
 
   return $result->json();
 }

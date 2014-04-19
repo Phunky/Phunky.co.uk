@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Phunky.co.uk</title>
+  <link rel="stylesheet" href="css/stylesheet.css">
+</head>
+<body>
+  {% spaceless %}
+    <div class="success">
+      <span>Mark has been wasting his time playing the following on <a href="http://steamcommunity.com/id/phunky/games/" target="_blank">Steam</a></span>
+    </div>
+    {% if steam.results %}
+      <div class="cards">
+        {% for game in steam.results %}
+          <a href="http://store.steampowered.com/app/{{ game.app_id|replace({'game_': ''}) }}/" target="_blank" class="card">
+            <div class="card-image">
+              <img src="http://cdn.steampowered.com/v/gfx/apps/{{ game.app_id|replace({'game_': ''}) }}/header.jpg" alt="{{ game.title }}">
+            </div>
+            <div class="card-stats">
+              <ul>
+                {% set activity = php_explode('/',game.activity) %}
+                {% if activity[1] %}
+                  {% set played = activity[0] %}
+                  {% set total = activity[1] %}
+                {% else %}
+                  {% set total = activity[0] %}
+                {% endif %}
+                <li>{{ played|replace({' last two weeks ':''})|default('0 hrs') }}<span>Last two weeks</span></li>
+                <li>{{ total|replace({' on record':''})|default('0 hrs') }}<span>On record</span></li>
+
+                <li>{{ game.achievements_earned|replace({' of ':'/', ' Achievements Earned:':''})|default('0') }}<span>Achievements</span></li>
+              </ul>
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+    {% endif %}
+    <div class="error">
+      <span><a href="http://steamcommunity.com/" target="_blank">Steam Community</a> data was scrapped and supplied by <a href="http://import.io">import.io</a></span>
+    </div>
+  {% endspaceless %}
+</body>
+</html>

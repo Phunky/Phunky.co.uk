@@ -1,0 +1,6 @@
+{
+  "require": {
+    "guzzlehttp/guzzle": "dev-master",
+    "twig/twig": "dev-master"
+  }
+}

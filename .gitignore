@@ -1,0 +1,13 @@
+# Exclude developers personal stuff
+*.sublime-*
+*.TODO
+
+# Exclude everything from composer apart from SCSS and customer stuff
+vendor/*
+!vendor/scss/
+!vendor/phunky/
+
+# Exclude log and cache folders
+logs/
+cache/
+psd/

@@ -4,5 +4,10 @@
     "guzzle/guzzle": "~3.7",
     "guzzle/cache": "3.7.*@dev",
     "twig/twig": "dev-master"
+  },
+  "autoload": {
+    "psr-4": {
+      "Importio\\": "vendor/phunky/Importio/"
+    }
   }
 }

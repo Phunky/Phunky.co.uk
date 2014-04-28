@@ -30,7 +30,7 @@ class View {
   }
 
   public function render($template, $data){
-    echo $this->twig->render($template . '.twig', $data);
+    echo $this->twig->render(strtolower($template) . '.twig', $data);
   }
 
 }

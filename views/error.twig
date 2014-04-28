@@ -1,10 +1,7 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Phunky</title>
-</head>
-<body>
-  Error!
-</body>
-</html>
+{% embed 'base.twig' %}
+  {% block body %}
+    <div class="success">
+      <span>404: Nope, sorry nothing here. <a href="/">Go back and try again</a></span>
+    </div>
+  {% endblock %}
+{% endembed %}

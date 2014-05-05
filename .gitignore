@@ -10,4 +10,5 @@ vendor/*
 # Exclude log and cache folders
 logs/
 cache/
+data/
 psd/

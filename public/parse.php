@@ -11,31 +11,13 @@ $response = $request->send();
 
 $crawler = new Crawler($response->getBody(true));
 
-$results = null;
-
-$crawler->filter('.profile_in_game.persona.online')->filter('.profile_in_game.persona.online')->each(function($node, $i) use (&$results) {
-  $results = [
-    'timestamp' => date("Y-m-d H:i:s"),
-    'online' => 1,
-    'playing' => 0
-  ];
-});
-
-$crawler->filter('.profile_in_game.persona.in-game .profile_in_game_name')->each(function($node, $i) use (&$results) {
-  $results = [
+// If my profile says i'm in game, store which game i'm playing
+$crawler->filter('.profile_in_game.persona.in-game .profile_in_game_name')->each(function($node, $i){
+  $fp = fopen('../data/playing.csv', 'a');
+  fputcsv($fp, [
     'timestamp' => date("Y-m-d H:i:s"),
     'online' => 1,
     'playing' => trim( $node->text() )
-  ];
-});
-
-if($results){
-  // Write CSV
-  $fp = fopen('../data/playing.csv', 'a');
-  fputcsv($fp, $results);
+  ]);
   fclose($fp);
-}
-
-// Notes
-// profile_in_game persona in-game | online | offline
-// .profile_in_game_name
+});

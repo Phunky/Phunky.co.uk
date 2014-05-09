@@ -5,22 +5,20 @@ require_once '../vendor/autoload.php';
 
 use Carbon\Carbon;
 
-if (($handle = fopen("../data/playing.csv", "r")) !== FALSE) {
-  $last = null;
-  while (($row = fgetcsv($handle, 1000, ",")) !== FALSE) {
+// Beans, beans, beans... fart
+R::setup('mysql:host=localhost;dbname=playing','phunky','sl1200m2');
 
-    if( isset($last) && $last[2] === $row[2] ){
-      $last_timestamp = Carbon::createFromFormat('Y-m-d H:i:s', $last[0]);
-      $timestamp = Carbon::createFromFormat('Y-m-d H:i:s', $row[0]);
+$logs = R::findAll('log', 'ORDER BY id DESC');
 
-      if( $last_timestamp->diffInMinutes($timestamp) > 5 ){
-        var_dump($row);
-      }
-    } else {
-      var_dump($row);
-    }
-
-    $last = $row;
-  }
-  fclose($handle);
+echo "<h1>Game stream</h1>";
+echo '<ul>';
+foreach($logs as $log){
+  echo '<li>';
+    echo '<h2>' . $log->game . '</h2>';
+    $started = Carbon::createFromFormat('Y-m-d H:i:s', $log->started);
+    $stopped = Carbon::createFromFormat('Y-m-d H:i:s', $log->stopped);
+    $played = $started->diffInMinutes($stopped);
+    echo 'played for ' . $played  . ' minutes, started playing at ' . $log->started . ' and stopped at ' . $log->stopped;
+  echo '</li>';
 }
+echo '</ul>';

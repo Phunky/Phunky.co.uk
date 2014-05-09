@@ -5,7 +5,8 @@
     "guzzle/cache": "3.7.*@dev",
     "symfony/dom-crawler": "2.5.*@dev",
     "symfony/css-selector": "2.5.*@dev",
-    "twig/twig": "dev-master"
+    "twig/twig": "dev-master",
+    "nesbot/Carbon": "*"
   },
   "autoload": {
     "psr-4": {

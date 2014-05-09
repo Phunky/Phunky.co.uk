@@ -21,7 +21,7 @@ foreach($logs as $log){
       $played = $started->diffInMinutes($stopped);
       echo 'played for ' . $played  . ' minutes, started playing at ' . $log->started . ' and stopped at ' . $log->stopped;
     } else {
-      echo 'Currently playing now!'
+      echo 'Currently playing now!';
     }
   echo '</li>';
 }

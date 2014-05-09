@@ -6,6 +6,7 @@
 vendor/*
 !vendor/scss/
 !vendor/phunky/
+!vendor/rb.phar
 
 # Exclude log and cache folders
 logs/

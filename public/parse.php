@@ -1,5 +1,5 @@
 <?php
-
+error_reporting(E_ALL);
 // Bring in anything from Composer and derps
 require_once '../vendor/autoload.php';
 
@@ -8,7 +8,7 @@ use Symfony\Component\DomCrawler\Crawler;
 use Carbon\Carbon;
 
 // Beans, beans, beans... fart
-R::setup('mysql:host=localhost;dbname=playing','root','mdh1569');
+R::setup('mysql:host=localhost;dbname=playing','phunky','sl1200m2');
 
 $log = R::dispense('log');
 
@@ -24,7 +24,6 @@ $crawler = new Crawler($response->getBody(true));
 $crawler->filter('.profile_in_game.persona.in-game .profile_in_game_name')->each(function($node, $i){
   $playing = trim( $node->text() );
   $log = R::findLast('log');
-  $log->last_seen = date("Y-m-d H:i:s");
 
   if( !$log ){
     $log = R::dispense('log');
@@ -41,6 +40,7 @@ $crawler->filter('.profile_in_game.persona.in-game .profile_in_game_name')->each
     $log->started = date("Y-m-d H:i:s");
   }
 
+  $log->last_seen = date("Y-m-d H:i:s");
   R::store( $log );
 });
 

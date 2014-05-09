@@ -9,6 +9,9 @@
     "nesbot/Carbon": "*"
   },
   "autoload": {
+    "files": [
+      "vendor/rb.phar"
+    ],
     "psr-4": {
       "Importio\\": "vendor/phunky/Importio/",
       "OTT\\": "vendor/phunky/OverTheTop/"

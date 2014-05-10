@@ -47,11 +47,8 @@ $crawler->filter('.profile_in_game.persona.in-game .profile_in_game_name')->each
 $crawler->filter('.profile_in_game.persona.offline, .profile_in_game.persona.online')->each(function($node, $i){
   $log = R::findLast('log');
 
-  if( $log ){
-
+  if( $log && !$log->stopped ){
     $log->stopped = date("Y-m-d H:i:s");
-    $log->last_seen = date("Y-m-d H:i:s");
-
     R::store( $log );
   }
 

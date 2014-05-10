@@ -27,15 +27,21 @@ $crawler->filter('.profile_in_game.persona.in-game .profile_in_game_name')->each
 
   if( !$log ){
     $log = R::dispense('log');
-    $log->game = $playing;
-    $log->started = date("Y-m-d H:i:s");
   }
 
   if( $log->game !== $playing ){
     $log->stopped = date("Y-m-d H:i:s");
-    R::store( $log );
+  } else {
 
-    $log = R::dispense('log');
+    $recent = $crawler->filter('.recent_games .game_name a')->eq(0);
+    if( $recent && trim( $recent->text() ) === $playing ){
+      $href = $recent->attr('href');
+      if( $href ){
+        $explode = explode('/', $recent->attr('href'));
+        $log->appid = end( $explode );
+      }
+    }
+
     $log->game = $playing;
     $log->started = date("Y-m-d H:i:s");
   }
@@ -44,7 +50,7 @@ $crawler->filter('.profile_in_game.persona.in-game .profile_in_game_name')->each
   R::store( $log );
 });
 
-$crawler->filter('.profile_in_game.persona.offline, .profile_in_game.persona.online')->each(function($node, $i){
+$crawler->filter('.profile_in_game.persona.offline, .profile_in_game.persona.online')->each(function($node, $i) use ($crawler){
   $log = R::findLast('log');
 
   if( $log && !$log->stopped ){

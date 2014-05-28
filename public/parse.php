@@ -25,12 +25,18 @@ $crawler->filter('.profile_in_game.persona.in-game .profile_in_game_name')->each
   $playing = trim( $node->text() );
   $log = R::findLast('log');
 
+  // No last played game (first parse)
+  // or we're playing a different game from the last one
   if( !$log || $log->game !== $playing ){
 
-    if($log){
+    // We're not playing the same game as before
+    // So stop it
+    if( $log ){
       $log->stopped = date("Y-m-d H:i:s");
+      R::store( $log );
     }
 
+    // New log for new game
     $log = R::dispense('log');
     $log->started = date("Y-m-d H:i:s");
     $log->game = $playing;
@@ -45,6 +51,7 @@ $crawler->filter('.profile_in_game.persona.in-game .profile_in_game_name')->each
     }
   }
 
+  // Last seen
   $log->last_seen = date("Y-m-d H:i:s");
   R::store( $log );
 });

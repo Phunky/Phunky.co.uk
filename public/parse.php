@@ -27,7 +27,7 @@ $crawler->filter('.profile_in_game.persona.in-game .profile_in_game_name')->each
 
   // No last played game (first parse)
   // or we're playing a different game from the last one
-  if( !$log || $log->game !== $playing ){
+  if( !$log || $log->game !== $playing || $log->stopped !== null ){
 
     // We're not playing the same game as before
     // So stop it

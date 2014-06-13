@@ -31,7 +31,7 @@ $crawler->filter('.profile_in_game.persona.in-game .profile_in_game_name')->each
 
     // We're not playing the same game as before
     // So stop it
-    if( $log ){
+    if( $log && !$log->stopped ){
       $log->stopped = date("Y-m-d H:i:s");
       R::store( $log );
     }
@@ -51,9 +51,11 @@ $crawler->filter('.profile_in_game.persona.in-game .profile_in_game_name')->each
     }
   }
 
-  // Last seen
-  $log->last_seen = date("Y-m-d H:i:s");
-  R::store( $log );
+  // Last seen for non-stopped games
+  if( !$log->stopped ){
+    $log->last_seen = date("Y-m-d H:i:s");
+    R::store( $log );
+  }
 });
 
 $crawler->filter('.profile_in_game.persona.offline, .profile_in_game.persona.online')->each(function($node, $i){

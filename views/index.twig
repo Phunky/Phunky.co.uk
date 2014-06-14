@@ -8,7 +8,8 @@
         {% for game in steam.results %}
           <a href="http://store.steampowered.com/app/{{ game.app_id|replace({'game_': ''}) }}/" target="_blank" class="card">
             <div class="card-image">
-              <img src="http://cdn.steampowered.com/v/gfx/apps/{{ game.app_id|replace({'game_': ''}) }}/header.jpg" alt="{{ game.title }}">
+              <img src="http://cdn.akamai.steamstatic.com/steam/apps/{{ game.app_id|replace({'game_': ''}) }}/header.jpg" alt="{{ game.title }}
+              ">
             </div>
             <div class="card-stats">
               <ul>

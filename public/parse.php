@@ -44,7 +44,6 @@ foreach($users as $user){
       // We're not playing the same game as before
       // So stop it
       if( $last_log && !$last_log->stopped ){
-        $last_log->last_seen = date("Y-m-d H:i:s");
         $last_log->stopped = date("Y-m-d H:i:s");
         R::store( $last_log );
       }
@@ -59,7 +58,7 @@ foreach($users as $user){
       // New log for new game
       $log = R::dispense('log');
       $log->started = date("Y-m-d H:i:s");
-      $log->game = $playing;
+      $log->games = $playing;
       $log->user = $user;
       $log->last_seen = date("Y-m-d H:i:s");
       R::store( $log );

@@ -31,11 +31,11 @@ foreach($users as $user){
     $game_name = trim( $node->text() );
 
     // Find what we're currenly playing
-      $playing = R::findLast('games', ' name = ? ', [ $game_name ]);
+    $playing = R::findLast('games', ' name = ? ', [ $game_name ]);
 
-      var_dump($last_log->game_id);
-      var_dump($playing->id);
-      var_dump($user);
+    var_dump($last_log->game_id);
+    var_dump($playing->id);
+    var_dump($user->name);
 
     // No last played game (first parse)
     // or we're playing a different game from the last one
@@ -44,7 +44,7 @@ foreach($users as $user){
       // We're not playing the same game as before
       // So stop it
       if( $last_log && !$last_log->stopped ){
-        $log->last_seen = date("Y-m-d H:i:s");
+        $last_log->last_seen = date("Y-m-d H:i:s");
         $last_log->stopped = date("Y-m-d H:i:s");
         R::store( $last_log );
       }
@@ -61,6 +61,7 @@ foreach($users as $user){
       $log->started = date("Y-m-d H:i:s");
       $log->game = $playing;
       $log->user = $user;
+      $log->last_seen = date("Y-m-d H:i:s");
       R::store( $log );
 
       $recent = $crawler->filter('.recent_games .game_name a')->eq(0);
@@ -77,8 +78,8 @@ foreach($users as $user){
     }
 
     // Last seen for non-stopped games
-    if( !$log->stopped ){
-      $log->last_seen = date("Y-m-d H:i:s");
+    if( !$last_log->last_seen = date("Y-m-d H:i:s");->stopped ){
+      $last_log->last_seen = date("Y-m-d H:i:s");->last_seen = date("Y-m-d H:i:s");
       R::store( $log );
     }
   });

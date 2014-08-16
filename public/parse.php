@@ -32,7 +32,7 @@ foreach($users as $user){
 
     // No last played game (first parse)
     // or we're playing a different game from the last one
-    if( !$last_log || $last_log->game->name !== $playing || $last_log->stopped !== null ){
+    if( !$last_log || $last_log->game->name !== $game_name || $last_log->stopped !== null ){
 
       // We're not playing the same game as before
       // So stop it
@@ -66,6 +66,8 @@ foreach($users as $user){
           $explode = explode('/', $recent->attr('href'));
           $playing->app_id = end( $explode );
           R::store( $playing );
+          $log->app_id = $playing->app_id;
+          R::store($log);
         }
       }
     }
@@ -80,7 +82,7 @@ foreach($users as $user){
   $crawler->filter('.profile_in_game.persona.offline, .profile_in_game.persona.online')->each(function($node, $i) use ($last_log) {
 
     if( $last_log && $last_log->stopped === null ){
-      $last_log->last_seen = date("Y-m-d H:i:s");
+      $last_log ->last_seen = date("Y-m-d H:i:s");
       $last_log->stopped = date("Y-m-d H:i:s");
       R::store( $last_log );
     }

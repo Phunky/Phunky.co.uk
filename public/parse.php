@@ -35,7 +35,7 @@ foreach($users as $user){
 
     var_dump($last_log->game_id);
     var_dump($playing->id);
-    var_dump($user->name);
+    var_dump($user->nickname);
 
     // No last played game (first parse)
     // or we're playing a different game from the last one

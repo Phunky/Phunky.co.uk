@@ -30,9 +30,12 @@ foreach($users as $user){
   $crawler->filter('.profile_in_game.persona.in-game .profile_in_game_name')->each(function($node, $i) use ($user, $crawler, $last_log) {
     $game_name = trim( $node->text() );
 
+    // Find what we're currenly playing
+      $playing = R::findLast('games', ' name = ? ', [ $game_name ]);
+
     // No last played game (first parse)
     // or we're playing a different game from the last one
-    if( !$last_log || $last_log->game->name !== $game_name || $last_log->stopped !== null ){
+    if( !$last_log || $last_log->game_id !== $playing->id || $last_log->stopped !== null ){
 
       // We're not playing the same game as before
       // So stop it
@@ -41,9 +44,6 @@ foreach($users as $user){
         $last_log->stopped = date("Y-m-d H:i:s");
         R::store( $last_log );
       }
-
-      // Find what we're currenly playing
-      $playing = R::findLast('games', ' name = ? ', [ $game_name ]);
 
       // Couldn't find the game, so store it as a new one
       if( !$playing ){

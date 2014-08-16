@@ -80,7 +80,7 @@ foreach($users as $user){
     // Last seen for non-stopped games
     if( !$last_log->stopped ){
       $last_log->last_seen = date("Y-m-d H:i:s");->last_seen = date("Y-m-d H:i:s");
-      R::store( $log );
+      R::store( $last_log );
     }
   });
 

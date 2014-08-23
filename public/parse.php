@@ -25,7 +25,7 @@ foreach($users as $user){
   $crawler = new Crawler($response->getBody(true));
 
   // Grab last game from db
-  $last_log = R::findLast('log', ' user_id = ? ', [ $user->id ]);
+  $last_log = R::findLast('log', ' user_id = ? ', [ $user->id ]) ?: null;
 
   // If my profile says i'm in game, store which game i'm currently playing
   $crawler->filter('.profile_in_game.persona.in-game .profile_in_game_name')->each(function($node, $i) use ($user, $crawler, $last_log) {
@@ -33,10 +33,6 @@ foreach($users as $user){
 
     // Find what we're currenly playing
     $playing = R::findLast('games', ' name = ? ', [ $game_name ]);
-
-    var_dump($last_log->games_id);
-    var_dump($playing->id);
-    var_dump($user);
 
     // No last played game (first parse)
     // or we're playing a different game from the last one

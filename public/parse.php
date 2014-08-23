@@ -34,13 +34,13 @@ foreach($users as $user){
     // Find what we're currenly playing
     $playing = R::findLast('games', ' name = ? ', [ $game_name ]);
 
-    var_dump($last_log->game_id);
+    var_dump($last_log->games_id);
     var_dump($playing->id);
     var_dump($user);
 
     // No last played game (first parse)
     // or we're playing a different game from the last one
-    if( !$last_log || $last_log->game_id !== $playing->id || $last_log->stopped !== null ){
+    if( !$last_log || $last_log->games_id !== $playing->id || $last_log->stopped !== null ){
 
       // We're not playing the same game as before
       // So stop it

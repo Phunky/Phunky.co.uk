@@ -14,14 +14,16 @@ echo "<h1>Game stream</h1>";
 echo '<ul>';
 foreach($logs as $log){
   echo '<li>';
-    echo '<strong>' . $log->user->nickname . '</strong>';
+    $user = $log->fetchAs('user');
+    $game = $log->fetchAs('games');
+    echo '<strong>' . $user->nickname . '</strong>';
     if($log->stopped){
       $started = Carbon::createFromFormat('Y-m-d H:i:s', $log->started);
       $stopped = Carbon::createFromFormat('Y-m-d H:i:s', $log->stopped);
       $played = $started->diffInMinutes($stopped);
-      echo 'played ' . $log->games->name . ' for ' . $played  . ' minutes, started playing at ' . $log->started . ' and stopped at ' . $log->stopped;
+      echo 'played ' . $game->name . ' for ' . $played  . ' minutes, started playing at ' . $log->started . ' and stopped at ' . $log->stopped;
     } else {
-      echo 'Currently playing ' . $log->games->name . ' now!';
+      echo 'Currently playing ' . $game->name . ' now!';
     }
   echo '</li>';
 }

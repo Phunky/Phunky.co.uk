@@ -78,8 +78,8 @@ foreach($users as $user){
     }
 
     // Last seen for non-stopped games
-    $last_log->last_seen = date("Y-m-d H:i:s");->last_seen = date("Y-m-d H:i:s");
-    R::store( $last_log )
+    $last_log->last_seen = date("Y-m-d H:i:s");
+    R::store( $last_log );
   });
 
   $crawler->filter('.profile_in_game.persona.offline, .profile_in_game.persona.online')->each(function($node, $i) use ($last_log) {

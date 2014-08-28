@@ -14,12 +14,6 @@ echo "<h1>Game stream</h1>";
 echo '<ul>';
 
 foreach($logs as $log){
-  $newDay = Carbon::createFromFormat('Y-m-d', $log->started);
-
-  if($newDay !== $day || !isset($day)){
-    echo '<li><h1>' . $newDay . '</h1></li>';
-    $day = $newDay;
-  }
   echo '<li>';
     $user = R::load('users', $log->user_id);
     $game = R::load('games', $log->games_id);

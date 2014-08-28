@@ -12,11 +12,20 @@ $logs = R::findAll('log', 'ORDER BY id DESC');
 
 echo "<h1>Game stream</h1>";
 echo '<ul>';
+
+$day = null;
+
 foreach($logs as $log){
+  $newDay = Carbon::createFromFormat('Y-m-d', $log->started);
+
+  if($newDay !== $day){
+    echo '<li><h1>' . $newDay . '</h1></li>';
+    $day = $newDay;
+  }
   echo '<li>';
     $user = R::load('users', $log->user_id);
     $game = R::load('games', $log->games_id);
-    echo '<strong>' . $user->nickname . '</strong>';
+    echo '<strong>' . $user->nickname . '</strong> - ';
     if($log->stopped){
       $started = Carbon::createFromFormat('Y-m-d H:i:s', $log->started);
       $stopped = Carbon::createFromFormat('Y-m-d H:i:s', $log->stopped);

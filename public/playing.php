@@ -22,9 +22,9 @@ foreach($logs as $log){
       $started = Carbon::createFromFormat('Y-m-d H:i:s', $log->started);
       $stopped = Carbon::createFromFormat('Y-m-d H:i:s', $log->stopped);
       $played = $started->diffInMinutes($stopped);
-      echo 'played ' . $game->name . ' for ' . $played  . ' minutes, started playing at ' . $log->started . ' and stopped at ' . $log->stopped;
+      echo 'played <strong>' . $game->name . '<strong> for <strong>' . $played  . ' minutes</strong>, started playing at ' . $log->started . ' and stopped at ' . $log->stopped;
     } else {
-      echo 'Currently playing ' . $game->name . ' now!';
+      echo '<strong><i>Currently playing ' . $game->name . ' now!</i></strong>';
     }
   echo '</li>';
 }

@@ -14,8 +14,8 @@ echo "<h1>Game stream</h1>";
 echo '<ul>';
 foreach($logs as $log){
   echo '<li>';
-    $user = $log->fetchAs('user');
-    $game = $log->fetchAs('games');
+    $user = R::load('user', $log->user_id);
+    $game = R::load('games', $log->games_id);
     echo '<strong>' . $user->nickname . '</strong>';
     if($log->stopped){
       $started = Carbon::createFromFormat('Y-m-d H:i:s', $log->started);

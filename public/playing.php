@@ -14,7 +14,7 @@ echo "<h1>Game stream</h1>";
 echo '<ul>';
 foreach($logs as $log){
   echo '<li>';
-    $user = R::load('user', $log->user_id);
+    $user = R::load('users', $log->user_id);
     $game = R::load('games', $log->games_id);
     echo '<strong>' . $user->nickname . '</strong>';
     if($log->stopped){

@@ -13,12 +13,10 @@ $logs = R::findAll('log', 'ORDER BY id DESC');
 echo "<h1>Game stream</h1>";
 echo '<ul>';
 
-$day = null;
-
 foreach($logs as $log){
   $newDay = Carbon::createFromFormat('Y-m-d', $log->started);
 
-  if($newDay !== $day){
+  if($newDay !== $day || !isset($day)){
     echo '<li><h1>' . $newDay . '</h1></li>';
     $day = $newDay;
   }
